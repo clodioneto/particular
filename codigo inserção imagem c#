@@ -1,0 +1,21 @@
+Fazer upload da foto:
+
+openfiledialog dialog = new openfiledialog();
+dialog.filter = "JPEG Files(*.jpg)|*.jpg|PNG Files(*.png)|*.png|ALLFiles(*.*)|*.*";
+if(dialog.ShowDialog() == DialogResult.OK)
+{
+	string foto = dialog.FileName.ToString();
+	txt_imagem.text = foto;
+	pictureBox1.ImageLocation = foto;
+}
+
+
+Salvar foto no banco:
+
+byte[] imagembyte = null;
+
+FileStream Fs = new FileStream(this.txt_imagem.Text, FileMode.Open, FileAccess.Read);
+
+BinaryReader br = new BinaryReader();
+
+string sql = "INSERT INTO nomedatabela (foto) VALUES (@foto);
