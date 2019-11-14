@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="index.css" />
+	<title>Cadastro de Livros</title>
+</h:head>
+<h:body>
+	<p:growl id="msgs" autoUpdate="true" />
+	<p:graphicImage library="imagens" name="livros.png"
+		style="position: absolute;  top: 10px; left: 100px; max-width:150px; max-height: 200px; width:auto; height:auto"></p:graphicImage>
+	
+	<h:form id="form" prependId="true" class="formulario">
+		
+		<p:panel id="pnlCadastro" header="Cadastre seu livro"
+			style="margin-top:165px; margin-left:20px; margin-right:10px">
+		
+			<h:panelGrid columns="3" columnClasses="value">
+				<h:outputText value="Nome do livro: *" />
+				<p:inputText value="#{controleCadMB.livro.nomeLivro}" id="nomeLivro"
+					required="true" requiredMessage="Nome do livro requirido" />
+				<p:message for="nomeLivro" />
+
+				<h:outputText value="Nome do autor: *" />
+				<p:inputText value="#{controleCadMB.livro.nomeAutor}" id="nomeAutor"
+					required="true" requiredMessage="Nome do autor requerido" />
+				<p:message for="nomeAutor" />
+
+
+				<h:outputText value="Ano de lançamento: *" />
+				<p:calendar value="#{controleCadMB.livro.anoLancamento}"
+					id="anoLancamento" inline="true" required="true"
+					requiredMessage="Ano lançamento requirido" />
+				<p:message for="anoLancamento" />
+
+				<h:outputText value="ISBN" />
+				<p:inputText value="#{controleCadMB.livro.isbn}" required="true"
+					id="isbn" />
+				<p:message for="isbn" />
+			</h:panelGrid>
+		</p:panel>
+		<br></br>
+
+		<p:commandButton process="@form" value="Salvar"
+			update=":pnlLista, form:pnlCadastro, :msgs"
+			action="#{controleCadMB.salvar}" style="margin-left: 100px" />
+	</h:form>
+	<br></br>
+
+	<p:panel id="pnlLista" header="Cadastro de Livros"
+		style="margin-left:100px; margin-right:130px">
+		<h:form id="for2m" prependId="true" class="formulario2">
+			<p:dataTable var="livro" value="#{controleCadMB.livros}">
+				<p:column headerText="Id">
+					<p:outputLabel value="#{livro.idLivro}" />
+				</p:column>
+				<p:column headerText="Nome do Livro">
+					<p:outputLabel value="#{livro.nomeLivro}" />
+				</p:column>
+				<p:column headerText="Nome do Autor">
+					<p:outputLabel value="#{livro.nomeAutor}" />
+				</p:column>
+				<p:column headerText="Data do Lançamento">
+					<p:outputLabel value="#{livro.anoLancamento}" />
+				</p:column>
+				<p:column headerText="ISBN">
+					<p:outputLabel value="#{livro.isbn}" />
+				</p:column>
+				<p:column>
+					<p:commandButton styleClass="lixeira" action="#{controleCadMB.apagar(livro.idLivro)}"
+						icon="ui-icon-trash" update=":pnlLista">
+					
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+
+
+
+</h:body>
+</html>
